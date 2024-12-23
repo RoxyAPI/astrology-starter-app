@@ -7,7 +7,9 @@ type TextProps = {
 
 const Text = ({ children, className }: TextProps) => {
   return (
-    <DefaultText className={`text-white ${className}`}>{children}</DefaultText>
+    <DefaultText selectable className={`text-white ${className}`}>
+      {children}
+    </DefaultText>
   );
 };
 
