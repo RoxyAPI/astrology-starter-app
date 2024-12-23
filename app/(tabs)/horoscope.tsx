@@ -1,19 +1,23 @@
 import Container from "@/components/container";
 import Text from "@/components/ui/text";
+import Colors from "@/constants/Colors";
 import { ZodiacType } from "@/types/zodiac";
 import { Link } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
-import { FlatList, Image, Pressable, View } from "react-native";
+import { ColorValue, FlatList, Image, Pressable, RefreshControl, View } from "react-native";
 
 export default function Horoscope() {
   const [data, setData] = useState<ZodiacType[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
 
   const fetchData = async () => {
+    setRefreshing(true);
     const response = await fetch(
       `${process.env.EXPO_PUBLIC_API_URL}/data/astro/astrology/zodiac/signs?token=${process.env.EXPO_PUBLIC_API_KEY}`,
     );
     const data = await response.json();
     setData(data);
+    setRefreshing(false);
   };
 
   useEffect(() => {
@@ -55,6 +59,7 @@ export default function Horoscope() {
           Horoscope Signs
         </Text>
         <FlatList
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={fetchData} tintColor={Colors.dark.tint} colors={[Colors.dark.tint as ColorValue]} />}
           data={data}
           numColumns={3}
           contentContainerStyle={{ paddingBottom: 50 }}

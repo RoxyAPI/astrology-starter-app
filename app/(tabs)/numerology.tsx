@@ -114,6 +114,7 @@ export default function Numerology() {
               touched,
               setFieldValue,
               resetForm,
+              isSubmitting,
             }) => (
               <View className="flex-1 gap-4">
                 <View className="gap-2">
@@ -165,6 +166,7 @@ export default function Numerology() {
                 <Pressable
                   className="p-4 px-16 rounded-xl border border-primary bg-primary/70 active:bg-primary/80"
                   onPress={() => handleSubmit()}
+                  disabled={isSubmitting}
                 >
                   <Text className="text-center">Get Result</Text>
                 </Pressable>
