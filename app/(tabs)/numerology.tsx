@@ -172,7 +172,10 @@ export default function Numerology() {
                 </Pressable>
                 <Pressable
                   className=""
-                  onPress={() => {resetForm(); setData(null);}}
+                  onPress={() => {
+                    resetForm();
+                    setData(null);
+                  }}
                 >
                   <Text className="text-center">Reset</Text>
                 </Pressable>

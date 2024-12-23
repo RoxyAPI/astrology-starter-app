@@ -4,7 +4,14 @@ import Colors from "@/constants/Colors";
 import { ZodiacType } from "@/types/zodiac";
 import { Link } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
-import { ColorValue, FlatList, Image, Pressable, RefreshControl, View } from "react-native";
+import {
+  ColorValue,
+  FlatList,
+  Image,
+  Pressable,
+  RefreshControl,
+  View,
+} from "react-native";
 
 export default function Horoscope() {
   const [data, setData] = useState<ZodiacType[]>([]);
@@ -59,7 +66,14 @@ export default function Horoscope() {
           Horoscope Signs
         </Text>
         <FlatList
-          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={fetchData} tintColor={Colors.dark.tint} colors={[Colors.dark.tint as ColorValue]} />}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={fetchData}
+              tintColor={Colors.dark.tint}
+              colors={[Colors.dark.tint as ColorValue]}
+            />
+          }
           data={data}
           numColumns={3}
           contentContainerStyle={{ paddingBottom: 50 }}
