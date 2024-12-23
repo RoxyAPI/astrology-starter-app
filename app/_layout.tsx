@@ -13,6 +13,7 @@ import "../global.css";
 
 import { useColorScheme } from "@/components/useColorScheme";
 import { StatusBar } from "expo-status-bar";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -55,12 +56,14 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <StatusBar style="auto" animated />
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-      </Stack>
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <StatusBar style="inverted" animated />
+        <Stack screenOptions={{ headerShown: false, animation: "none" }}>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+        </Stack>
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 }
