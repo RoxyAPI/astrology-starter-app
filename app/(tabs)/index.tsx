@@ -32,7 +32,7 @@ export default function Zodiac() {
       >
         <Pressable className="flex-1">
           <View className="flex flex-1 my-4">
-            <View className="flex border flex-1 m-2 rounded-3xl bg-[#0f2027]">
+            <View className="flex border flex-1 m-2 rounded-3xl bg-secondary">
               <Image
                 className="w-24 h-24 mx-auto my-4"
                 source={{ uri: item.image }}
