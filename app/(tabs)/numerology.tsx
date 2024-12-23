@@ -113,6 +113,7 @@ export default function Numerology() {
               errors,
               touched,
               setFieldValue,
+              resetForm,
             }) => (
               <View className="flex-1 gap-4">
                 <View className="gap-2">
@@ -166,6 +167,12 @@ export default function Numerology() {
                   onPress={() => handleSubmit()}
                 >
                   <Text className="text-center">Get Result</Text>
+                </Pressable>
+                <Pressable
+                  className=""
+                  onPress={() => {resetForm(); setData(null);}}
+                >
+                  <Text className="text-center">Reset</Text>
                 </Pressable>
               </View>
             )}
