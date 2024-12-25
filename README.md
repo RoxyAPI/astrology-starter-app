@@ -4,9 +4,9 @@ The **Astrology Starter App** is a React Native application designed to quickly 
 
 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
   <img src="./assets/screenshot1.jpeg" alt="Zodiac Screen" style="width: 100%;">
-  <img src="./assets/screenshot2.jpg" alt="Zodiac Details" style="width: 100%;">
-  <img src="./assets/screenshot3.jpg" alt="Numerology Screen" style="width: 100%;">
-  <img src="./assets/screenshot4.jpg" alt="Tarot Screen" style="width: 100%;">
+  <img src="./assets/screenshot2.jpeg" alt="Zodiac Details" style="width: 100%;">
+  <img src="./assets/screenshot3.jpeg" alt="Numerology Screen" style="width: 100%;">
+  <img src="./assets/screenshot4.jpeg" alt="Tarot Screen" style="width: 100%;">
 </div>
 
 ## Key Features
