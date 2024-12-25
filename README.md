@@ -2,12 +2,24 @@
 
 The **Astrology Starter App** is a React Native application designed to quickly integrate the **Astrology API** by RoxyAPI into your project. With this starter app, you can explore astrology features like zodiac signs, horoscopes, and compatibility directly from your mobile app.
 
-<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
-  <img src="./assets/screenshot1.jpeg" alt="Zodiac Screen" style="width: 100%;">
-  <img src="./assets/screenshot2.jpeg" alt="Zodiac Details" style="width: 100%;">
-  <img src="./assets/screenshot3.jpeg" alt="Numerology Screen" style="width: 100%;">
-  <img src="./assets/screenshot4.jpeg" alt="Tarot Screen" style="width: 100%;">
-</div>
+<table>
+  <tr>
+    <td>
+      <img src="./assets/screenshot1.jpeg" alt="Zodiac Screen" width="100%">
+    </td>
+    <td>
+      <img src="./assets/screenshot2.jpeg" alt="Zodiac Details" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="./assets/screenshot3.jpeg" alt="Numerology Screen" width="100%">
+    </td>
+    <td>
+      <img src="./assets/screenshot4.jpeg" alt="Tarot Screen" width="100%">
+    </td>
+  </tr>
+</table>
 
 ## Key Features
 
