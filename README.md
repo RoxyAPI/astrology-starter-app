@@ -79,7 +79,7 @@ Follow the instructions below to set up and run the Astrology Starter App locall
 
      ```plaintext
      EXPO_PUBLIC_API_URL=https://roxyapi.com/api/v1
-     EXPO_PUBLIC_API_TOKEN=your_api_token_here
+     EXPO_PUBLIC_API_KEY=your_roxy_api_token_here
      ```
 
    > **Note**: To protect your API token, consider setting up a secure server-side API proxy and routing all requests through it.
