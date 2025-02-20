@@ -1,6 +1,6 @@
 # Astrology Starter App
 
-The **Astrology Starter App** is a React Native application designed to quickly integrate the **Astrology API** by RoxyAPI into your project. With this starter app, you can explore astrology features like zodiac signs, horoscopes, and compatibility directly from your mobile app.
+The **Astrology Starter App** is a React Native application designed to quickly integrate the **Astrology API** by RoxyAPI into your project. With this starter app, you can explore astrology features like zodiac signs, horoscopes, numerology, tarot and compatibility directly from your mobile app.
 
 <table>
   <tr>
