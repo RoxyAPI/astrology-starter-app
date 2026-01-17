@@ -44,7 +44,7 @@ A complete, working astrology app demonstrating key API features:
 
 ### 1. Get Your API Key
 
-Visit [roxyapi.com/pricing](https://roxyapi.com/pricing) to get instant API access.
+Visit [Astrology API](https://roxyapi.com/products/astrology-api) to get instant API access.
 
 ### 2. Install & Configure
 
