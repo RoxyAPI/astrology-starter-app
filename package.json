@@ -8,35 +8,37 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "generate:types": "openapi-typescript https://roxyapi.com/api/v2/astrology/openapi.json -o src/api/schema.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "ncu:minor": "npx -y npm-check-updates --target minor",
+    "ncu:minor:apply": "npx -y npm-check-updates -u --target minor && npm install"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.2.0",
     "@react-native-picker/picker": "^2.11.4",
-    "expo": "~54.0.31",
+    "expo": "~54.0.33",
     "expo-constants": "~18.0.13",
     "expo-image": "~3.0.11",
     "expo-linking": "~8.0.11",
-    "expo-router": "~6.0.21",
+    "expo-router": "~6.0.23",
     "expo-status-bar": "~3.0.9",
-    "lucide-react-native": "^0.562.0",
-    "nativewind": "^4.2.1",
-    "openapi-fetch": "^0.15.0",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "react-native": "0.81.5",
-    "react-native-gesture-handler": "~2.28.0",
-    "react-native-reanimated": "~4.1.1",
-    "react-native-safe-area-context": "~5.6.0",
-    "react-native-screens": "~4.16.0",
-    "react-native-svg": "15.12.1",
-    "react-native-worklets": "0.5.1",
-    "tailwindcss": "^3.4.17"
+    "lucide-react-native": "^0.577.0",
+    "nativewind": "^4.2.3",
+    "openapi-fetch": "^0.17.0",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
+    "react-native": "0.85.2",
+    "react-native-gesture-handler": "~2.31.1",
+    "react-native-reanimated": "~4.3.0",
+    "react-native-safe-area-context": "~5.7.0",
+    "react-native-screens": "~4.24.0",
+    "react-native-svg": "15.15.4",
+    "react-native-worklets": "0.8.1",
+    "tailwindcss": "^3.4.19"
   },
   "devDependencies": {
-    "@types/react": "~19.1.0",
-    "openapi-typescript": "^7.10.1",
-    "typescript": "~5.9.2"
+    "@types/react": "~19.2.14",
+    "openapi-typescript": "^7.13.0",
+    "typescript": "~5.9.3"
   },
   "private": true
 }
