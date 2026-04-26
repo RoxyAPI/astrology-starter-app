@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://roxyapi.com">
+    <img src="https://raw.githubusercontent.com/RoxyAPI/astrology-starter-app/main/assets/hero.png" alt="Astrology app, ready to ship. Cross-platform Expo starter for iOS, Android, and Web. Powered by RoxyAPI." width="100%">
+  </a>
+</p>
+
 # RoxyAPI Astrology Starter
 
 **Production-ready astrology app template** powered by [RoxyAPI's Western Astrology API](https://roxyapi.com/products/astrology-api). Build professional astrology features in minutes with React Native, Expo, and TypeScript.
