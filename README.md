@@ -8,6 +8,13 @@
 
 **Production-ready astrology app template** powered by [RoxyAPI's Western Astrology API](https://roxyapi.com/products/astrology-api). Build professional astrology features in minutes with React Native, Expo, and TypeScript.
 
+[![Get API Key](https://img.shields.io/badge/Get_API_Key-RoxyAPI-14b8a6?style=for-the-badge&logo=key&logoColor=white)](https://roxyapi.com/pricing)
+[![Try the API live](https://img.shields.io/badge/Try_API_Live-Free_in_browser-22c55e?style=for-the-badge&logo=swagger&logoColor=white)](https://roxyapi.com/api-reference)
+[![Quickstart](https://img.shields.io/badge/Docs-Quickstart-3b82f6?style=for-the-badge&logo=readthedocs&logoColor=white)](https://roxyapi.com/docs/quickstart)
+[![Methodology](https://img.shields.io/badge/Methodology-NASA_JPL_verified-f59e0b?style=for-the-badge&logo=nasa&logoColor=white)](https://roxyapi.com/methodology)
+[![Astrology API](https://img.shields.io/badge/Astrology_API-Reference-a855f7?style=for-the-badge&logo=star&logoColor=white)](https://roxyapi.com/products/astrology-api)
+[![More starters](https://img.shields.io/badge/More_Starters-RoxyAPI-ec4899?style=for-the-badge&logo=github&logoColor=white)](https://roxyapi.com/starters)
+
 ## 📸 Screenshots
 
 <div align="center">
