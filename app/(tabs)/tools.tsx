@@ -1,43 +1,47 @@
 import { View, Text, ScrollView, Pressable, Alert } from "react-native";
 import { useState } from "react";
-import { LoadingSpinner, ErrorMessage, FormInput } from "../../src/components";
+import { LoadingSpinner, ErrorMessage, FormInput, CityPicker } from "../../src/components";
 import { astrologyApi } from "../../src/api";
-import type { CompatibilityScore, PersonBirthData } from "../../src/api/types";
+import type { CompatibilityScore, BirthDetails, City } from "../../src/api/types";
 
 type ToolType = 'compatibility' | 'houses' | 'aspects';
+
+/** Build the chart request body from a date, a time, and a geocoded city. */
+const toBirthDetails = (date: string, time: string, city: City): BirthDetails => ({
+  date,
+  time,
+  latitude: city.latitude,
+  longitude: city.longitude,
+  timezone: city.timezone,
+});
 
 export default function ToolsScreen() {
   const [activeTool, setActiveTool] = useState<ToolType>('compatibility');
 
-  // Compatibility state
-  const [person1Data, setPerson1Data] = useState<PersonBirthData>({
-    date: '',
-    time: '',
-    latitude: 0,
-    longitude: 0,
-    timezone: 0,
-  });
-  const [person2Data, setPerson2Data] = useState<PersonBirthData>({
-    date: '',
-    time: '',
-    latitude: 0,
-    longitude: 0,
-    timezone: 0,
-  });
+  const [p1Date, setP1Date] = useState('');
+  const [p1Time, setP1Time] = useState('');
+  const [p1City, setP1City] = useState<City | null>(null);
+  const [p2Date, setP2Date] = useState('');
+  const [p2Time, setP2Time] = useState('');
+  const [p2City, setP2City] = useState<City | null>(null);
+
   const [compatibility, setCompatibility] = useState<CompatibilityScore | null>(null);
   const [compatibilityLoading, setCompatibilityLoading] = useState(false);
   const [compatibilityError, setCompatibilityError] = useState<string | null>(null);
 
   const handleCalculateCompatibility = async () => {
-    if (!person1Data.date || !person1Data.time || !person2Data.date || !person2Data.time) {
-      Alert.alert('Missing Data', 'Please enter both birth dates and times');
+    if (!p1Date || !p1Time || !p1City || !p2Date || !p2Time || !p2City) {
+      Alert.alert('Missing Data', 'Please enter both birth dates, times, and cities');
       return;
     }
 
     setCompatibilityLoading(true);
     setCompatibilityError(null);
     try {
-      const result = await astrologyApi.getCompatibilityScore(person1Data, person2Data);
+      const result = await astrologyApi.getCompatibilityScore({
+        person1: toBirthDetails(p1Date, p1Time, p1City),
+        person2: toBirthDetails(p2Date, p2Time, p2City),
+      });
       setCompatibility(result);
     } catch {
       setCompatibilityError('Failed to calculate compatibility');
@@ -49,7 +53,6 @@ export default function ToolsScreen() {
   return (
     <ScrollView className="flex-1 bg-white dark:bg-zinc-950">
       <View className="px-6 pt-6 pb-8">
-        {/* Header */}
         <View className="mb-6">
           <Text className="text-3xl font-bold text-zinc-900 dark:text-white">Tools</Text>
           <Text className="text-zinc-600 dark:text-zinc-400 mt-2">
@@ -57,23 +60,18 @@ export default function ToolsScreen() {
           </Text>
         </View>
 
-        {/* Tool Selector */}
         <View className="flex-row gap-2 mb-6">
           {(['compatibility', 'houses', 'aspects'] as const).map((tool) => (
             <Pressable
               key={tool}
               onPress={() => setActiveTool(tool)}
               className={`flex-1 py-3 px-4 rounded-xl ${
-                activeTool === tool
-                  ? 'bg-indigo-600'
-                  : 'bg-zinc-100 dark:bg-zinc-900'
+                activeTool === tool ? 'bg-indigo-600' : 'bg-zinc-100 dark:bg-zinc-900'
               }`}
             >
               <Text
                 className={`text-center font-semibold capitalize ${
-                  activeTool === tool
-                    ? 'text-white'
-                    : 'text-zinc-700 dark:text-zinc-300'
+                  activeTool === tool ? 'text-white' : 'text-zinc-700 dark:text-zinc-300'
                 }`}
               >
                 {tool}
@@ -92,81 +90,17 @@ export default function ToolsScreen() {
             </View>
 
             <View className="bg-zinc-50 dark:bg-zinc-900 p-4 rounded-2xl mb-4">
-              <Text className="text-lg font-semibold text-zinc-900 dark:text-white">
-                Person 1
-              </Text>
-              <FormInput
-                label="Date (YYYY-MM-DD)"
-                value={person1Data.date}
-                onChangeText={(text) => setPerson1Data({ ...person1Data, date: text })}
-                placeholder="1990-01-15"
-              />
-              <FormInput
-                label="Time (HH:MM:SS)"
-                value={person1Data.time}
-                onChangeText={(text) => setPerson1Data({ ...person1Data, time: text })}
-                placeholder="14:30:00"
-              />
-              <FormInput
-                label="Latitude"
-                value={person1Data.latitude.toString()}
-                onChangeText={(text) => setPerson1Data({ ...person1Data, latitude: parseFloat(text) || 0 })}
-                placeholder="40.7128"
-                keyboardType="numeric"
-              />
-              <FormInput
-                label="Longitude"
-                value={person1Data.longitude.toString()}
-                onChangeText={(text) => setPerson1Data({ ...person1Data, longitude: parseFloat(text) || 0 })}
-                placeholder="-74.0060"
-                keyboardType="numeric"
-              />
-              <FormInput
-                label="Timezone"
-                value={person1Data.timezone.toString()}
-                onChangeText={(text) => setPerson1Data({ ...person1Data, timezone: parseFloat(text) || 0 })}
-                placeholder="-5"
-                keyboardType="numeric"
-              />
+              <Text className="text-lg font-semibold text-zinc-900 dark:text-white mb-2">Person 1</Text>
+              <FormInput label="Date (YYYY-MM-DD)" value={p1Date} onChangeText={setP1Date} placeholder="1990-01-15" />
+              <FormInput label="Time (HH:MM:SS)" value={p1Time} onChangeText={setP1Time} placeholder="14:30:00" />
+              <CityPicker label="Birth City" value={p1City} onSelect={setP1City} />
             </View>
 
             <View className="bg-zinc-50 dark:bg-zinc-900 p-4 rounded-2xl mb-4">
-              <Text className="text-lg font-semibold text-zinc-900 dark:text-white">
-                Person 2
-              </Text>
-              <FormInput
-                label="Date (YYYY-MM-DD)"
-                value={person2Data.date}
-                onChangeText={(text) => setPerson2Data({ ...person2Data, date: text })}
-                placeholder="1992-06-20"
-              />
-              <FormInput
-                label="Time (HH:MM:SS)"
-                value={person2Data.time}
-                onChangeText={(text) => setPerson2Data({ ...person2Data, time: text })}
-                placeholder="09:15:00"
-              />
-              <FormInput
-                label="Latitude"
-                value={person2Data.latitude.toString()}
-                onChangeText={(text) => setPerson2Data({ ...person2Data, latitude: parseFloat(text) || 0 })}
-                placeholder="34.0522"
-                keyboardType="numeric"
-              />
-              <FormInput
-                label="Longitude"
-                value={person2Data.longitude.toString()}
-                onChangeText={(text) => setPerson2Data({ ...person2Data, longitude: parseFloat(text) || 0 })}
-                placeholder="-118.2437"
-                keyboardType="numeric"
-              />
-              <FormInput
-                label="Timezone"
-                value={person2Data.timezone.toString()}
-                onChangeText={(text) => setPerson2Data({ ...person2Data, timezone: parseFloat(text) || 0 })}
-                placeholder="-8"
-                keyboardType="numeric"
-              />
+              <Text className="text-lg font-semibold text-zinc-900 dark:text-white mb-2">Person 2</Text>
+              <FormInput label="Date (YYYY-MM-DD)" value={p2Date} onChangeText={setP2Date} placeholder="1992-06-20" />
+              <FormInput label="Time (HH:MM:SS)" value={p2Time} onChangeText={setP2Time} placeholder="09:15:00" />
+              <CityPicker label="Birth City" value={p2City} onSelect={setP2City} />
             </View>
 
             <Pressable
@@ -184,7 +118,6 @@ export default function ToolsScreen() {
 
             {compatibility && (
               <View className="space-y-4">
-                {/* Overall Score */}
                 <View className="bg-indigo-50 dark:bg-indigo-950 p-6 rounded-2xl border-2 border-indigo-600">
                   <Text className="text-sm uppercase tracking-wide text-indigo-600 dark:text-indigo-400 mb-2">
                     Overall Compatibility
@@ -197,7 +130,6 @@ export default function ToolsScreen() {
                   </Text>
                 </View>
 
-                {/* Category Scores */}
                 <View className="bg-zinc-50 dark:bg-zinc-900 p-6 rounded-2xl">
                   <Text className="text-lg font-semibold text-zinc-900 dark:text-white mb-4">
                     Category Breakdown
@@ -224,7 +156,6 @@ export default function ToolsScreen() {
                   </View>
                 </View>
 
-                {/* Strengths */}
                 {compatibility.strengths && compatibility.strengths.length > 0 && (
                   <View className="bg-green-50 dark:bg-green-950/30 p-6 rounded-2xl border border-green-200 dark:border-green-900">
                     <Text className="text-lg font-semibold text-green-700 dark:text-green-400 mb-3">
@@ -233,14 +164,13 @@ export default function ToolsScreen() {
                     <View className="space-y-2">
                       {compatibility.strengths.map((strength, idx) => (
                         <Text key={idx} className="text-zinc-700 dark:text-zinc-300">
-                          ✓ {strength}
+                          + {strength}
                         </Text>
                       ))}
                     </View>
                   </View>
                 )}
 
-                {/* Challenges */}
                 {compatibility.challenges && compatibility.challenges.length > 0 && (
                   <View className="bg-amber-50 dark:bg-amber-950/30 p-6 rounded-2xl border border-amber-200 dark:border-amber-900">
                     <Text className="text-lg font-semibold text-amber-700 dark:text-amber-400 mb-3">
@@ -249,14 +179,13 @@ export default function ToolsScreen() {
                     <View className="space-y-2">
                       {compatibility.challenges.map((challenge, idx) => (
                         <Text key={idx} className="text-zinc-700 dark:text-zinc-300">
-                          → {challenge}
+                          {challenge}
                         </Text>
                       ))}
                     </View>
                   </View>
                 )}
 
-                {/* Aspect Breakdown */}
                 {compatibility.aspectBreakdown && (
                   <View className="bg-zinc-50 dark:bg-zinc-900 p-6 rounded-2xl">
                     <Text className="text-lg font-semibold text-zinc-900 dark:text-white mb-4">
@@ -302,7 +231,7 @@ export default function ToolsScreen() {
               Houses Calculator
             </Text>
             <Text className="text-zinc-600 dark:text-zinc-400 text-center">
-              Calculate house cusps for a specific date, time, and location. Use the Charts tab for natal chart with houses.
+              Calculate house cusps for a specific date, time, and location. Use the Charts tab for a natal chart with houses.
             </Text>
           </View>
         )}
@@ -314,7 +243,7 @@ export default function ToolsScreen() {
               Aspects Calculator
             </Text>
             <Text className="text-zinc-600 dark:text-zinc-400 text-center">
-              Calculate aspects between planets. Use the Charts tab for natal chart with full aspect analysis.
+              Calculate aspects between planets. Use the Charts tab for a natal chart with full aspect analysis.
             </Text>
           </View>
         )}

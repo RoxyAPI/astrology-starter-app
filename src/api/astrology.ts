@@ -1,245 +1,93 @@
-import { apiClient } from './client';
+import { roxy } from './client';
+import type {
+  GetAstrologySignsResponse,
+  GetAstrologySignsByIdResponse,
+  GetAstrologyHoroscopeBySignDailyData,
+  GetAstrologyHoroscopeBySignDailyResponse,
+  GetAstrologyHoroscopeBySignWeeklyResponse,
+  GetAstrologyHoroscopeBySignMonthlyResponse,
+  GetAstrologyMoonPhaseCurrentResponse,
+  PostAstrologyNatalChartData,
+  PostAstrologyNatalChartResponse,
+  PostAstrologyPlanetsResponse,
+  PostAstrologySynastryData,
+  PostAstrologySynastryResponse,
+  PostAstrologyCompatibilityScoreData,
+  PostAstrologyCompatibilityScoreResponse,
+  PostAstrologyCompositeChartData,
+  PostAstrologyCompositeChartResponse,
+  GetLocationSearchResponse,
+} from '@roxyapi/sdk';
+
+type SdkResult<T> = { data?: T; error?: unknown };
+
+/**
+ * Unwrap a Roxy SDK result, returning `data` or throwing a screen-friendly message. The SDK never throws on a non-2xx response: it returns `{ data, error }`, so every call site funnels through here to turn an error into one thrown `Error` the screens can catch.
+ */
+const unwrap = <T>(result: SdkResult<T>, message: string): T => {
+  if (result.error || !result.data) throw new Error(message);
+  return result.data;
+};
+
+/** Birth details for one person on a chart. Pulled from the natal chart request type so screens cannot drift from the spec. `timezone` accepts the IANA string from {@link astrologyApi.searchCities} or a decimal offset. */
+export type BirthDetails = NonNullable<PostAstrologyNatalChartData['body']>;
+
+/** A pair of people for synastry, composite, and compatibility calls. */
+export type SynastryRequest = NonNullable<PostAstrologySynastryData['body']>;
+export type CompatibilityRequest = NonNullable<PostAstrologyCompatibilityScoreData['body']>;
+export type CompositeChartRequest = NonNullable<PostAstrologyCompositeChartData['body']>;
+
+/** One city from {@link astrologyApi.searchCities}. Feed `latitude`, `longitude`, and `timezone` straight into any chart call. */
+export type City = GetLocationSearchResponse['cities'][number];
+
+/** Lowercase zodiac sign id accepted by the horoscope path param (aries, taurus, ...). Matches `ZodiacSign['id']` from the signs list. */
+export type ZodiacSignId = GetAstrologyHoroscopeBySignDailyData['path']['sign'];
 
 export const astrologyApi = {
-  getSigns: async () => {
-    const { data, error } = await apiClient.GET('/signs');
-    if (error) throw new Error(`Failed to fetch signs: ${JSON.stringify(error)}`);
-    return data!;
-  },
+  searchCities: async (q: string): Promise<City[]> =>
+    unwrap(await roxy.location.searchCities({ query: { q } }), 'Failed to search cities').cities,
 
-  getSignById: async (id: string) => {
-    const { data, error } = await apiClient.GET('/signs/{identifier}', {
-      params: { path: { identifier: id } },
-    });
-    if (error) throw new Error(`Failed to fetch sign: ${JSON.stringify(error)}`);
-    return data!;
-  },
+  getSigns: async (): Promise<GetAstrologySignsResponse> =>
+    unwrap(await roxy.astrology.listZodiacSigns(), 'Failed to fetch signs'),
 
-  getNatalChart: async (params: any) => {
-    const { data, error } = await apiClient.POST('/natal-chart', { body: params });
-    if (error) throw new Error(`Failed to generate natal chart: ${JSON.stringify(error)}`);
-    return data!;
-  },
+  getSignById: async (id: string): Promise<GetAstrologySignsByIdResponse> =>
+    unwrap(await roxy.astrology.getZodiacSign({ path: { id } }), 'Sign not found'),
 
-  getDailyHoroscope: async (sign: string) => {
-    const { data, error } = await apiClient.GET('/horoscope/{sign}/daily', {
-      params: { path: { sign: sign as any } },
-    });
-    if (error) throw new Error(`Failed to fetch daily horoscope: ${JSON.stringify(error)}`);
-    return data!;
-  },
+  getDailyHoroscope: async (sign: ZodiacSignId): Promise<GetAstrologyHoroscopeBySignDailyResponse> =>
+    unwrap(await roxy.astrology.getDailyHoroscope({ path: { sign } }), 'Failed to fetch daily horoscope'),
 
-  getAllDailyHoroscopes: async () => {
-    const { data, error } = await apiClient.GET('/horoscope/daily');
-    if (error) throw new Error(`Failed to fetch all horoscopes: ${JSON.stringify(error)}`);
-    return data!;
-  },
+  getWeeklyHoroscope: async (sign: ZodiacSignId): Promise<GetAstrologyHoroscopeBySignWeeklyResponse> =>
+    unwrap(await roxy.astrology.getWeeklyHoroscope({ path: { sign } }), 'Failed to fetch weekly horoscope'),
 
-  getWeeklyHoroscope: async (sign: string) => {
-    const { data, error } = await apiClient.GET('/horoscope/{sign}/weekly', {
-      params: { path: { sign: sign as any } },
-    });
-    if (error) throw new Error(`Failed to fetch weekly horoscope: ${JSON.stringify(error)}`);
-    return data!;
-  },
+  getMonthlyHoroscope: async (sign: ZodiacSignId): Promise<GetAstrologyHoroscopeBySignMonthlyResponse> =>
+    unwrap(await roxy.astrology.getMonthlyHoroscope({ path: { sign } }), 'Failed to fetch monthly horoscope'),
 
-  getMonthlyHoroscope: async (sign: string) => {
-    const { data, error } = await apiClient.GET('/horoscope/{sign}/monthly', {
-      params: { path: { sign: sign as any } },
-    });
-    if (error) throw new Error(`Failed to fetch monthly horoscope: ${JSON.stringify(error)}`);
-    return data!;
-  },
+  getMoonPhase: async (): Promise<GetAstrologyMoonPhaseCurrentResponse> =>
+    unwrap(await roxy.astrology.getCurrentMoonPhase(), 'Failed to fetch moon phase'),
 
-  getMoonPhase: async () => {
-    const { data, error } = await apiClient.GET('/moon-phase/current');
-    if (error) throw new Error(`Failed to fetch moon phase: ${JSON.stringify(error)}`);
-    return data!;
-  },
+  getNatalChart: async (body: BirthDetails): Promise<PostAstrologyNatalChartResponse> =>
+    unwrap(await roxy.astrology.generateNatalChart({ body }), 'Failed to generate natal chart'),
 
   getPlanetPositions: async (
     date: string,
     time: string,
     latitude: number,
     longitude: number,
-    timezone: number
-  ) => {
-    const { data, error } = await apiClient.POST('/planets', {
-      body: { date, time, latitude, longitude, timezone },
-    });
-    if (error) throw new Error(`Failed to fetch planet positions: ${JSON.stringify(error)}`);
-    return data!;
-  },
-
-  getSynastry: async (
-    person1: any,
-    person2: any,
-    houseSystem?: 'placidus' | 'whole-sign' | 'equal' | 'koch'
-  ) => {
-    const { data, error } = await apiClient.POST('/synastry', {
-      body: { person1, person2, houseSystem: houseSystem || 'placidus' },
-    });
-    if (error) throw new Error(`Failed to calculate synastry: ${JSON.stringify(error)}`);
-    return data!;
-  },
-
-  getCompatibilityScore: async (person1: any, person2: any) => {
-    const { data, error } = await apiClient.POST('/compatibility-score', {
-      body: { person1, person2 },
-    });
-    if (error) throw new Error(`Failed to calculate compatibility: ${JSON.stringify(error)}`);
-    return data!;
-  },
-
-  getCompositeChart: async (
-    person1: any,
-    person2: any,
-    houseSystem?: 'placidus' | 'whole-sign' | 'equal' | 'koch'
-  ) => {
-    const { data, error } = await apiClient.POST('/composite-chart', {
-      body: { person1, person2, houseSystem: houseSystem || 'placidus' },
-    });
-    if (error) throw new Error(`Failed to generate composite chart: ${JSON.stringify(error)}`);
-    return data!;
-  },
-
-  getTransits: async (date: string, time: string, timezone: number, natalChart?: any) => {
-    const { data, error } = await apiClient.POST('/transits', {
-      body: { date, time, timezone, natalChart },
-    });
-    if (error) throw new Error(`Failed to calculate transits: ${JSON.stringify(error)}`);
-    return data!;
-  },
-
-  getTransitAspects: async (natalChart: any, transitDate?: string) => {
-    const { data, error } = await apiClient.POST('/transit-aspects', {
-      body: { natalChart, transitDate },
-    });
-    if (error) throw new Error(`Failed to calculate transit aspects: ${JSON.stringify(error)}`);
-    return data!;
-  },
-
-  getSolarReturn: async (
-    birthDate: string,
-    birthTime: string,
-    returnYear: number,
-    latitude: number,
-    longitude: number,
     timezone: number,
-    houseSystem?: 'placidus' | 'whole-sign' | 'equal' | 'koch'
-  ) => {
-    const { data, error } = await apiClient.POST('/solar-return', {
-      body: {
-        birthDate,
-        birthTime,
-        returnYear,
-        latitude,
-        longitude,
-        timezone,
-        houseSystem: houseSystem || 'placidus',
-      },
-    });
-    if (error) throw new Error(`Failed to calculate solar return: ${JSON.stringify(error)}`);
-    return data!;
-  },
+  ): Promise<PostAstrologyPlanetsResponse> =>
+    unwrap(
+      await roxy.astrology.getPlanetaryPositions({ body: { date, time, latitude, longitude, timezone } }),
+      'Failed to fetch planet positions',
+    ),
 
-  getLunarReturn: async (
-    birthDate: string,
-    birthTime: string,
-    returnDate: string,
-    latitude: number,
-    longitude: number,
-    timezone: number,
-    houseSystem?: 'placidus' | 'whole-sign' | 'equal' | 'koch'
-  ) => {
-    const { data, error } = await apiClient.POST('/lunar-return', {
-      body: {
-        birthDate,
-        birthTime,
-        returnDate,
-        latitude,
-        longitude,
-        timezone,
-        houseSystem: houseSystem || 'placidus',
-      },
-    });
-    if (error) throw new Error(`Failed to calculate lunar return: ${JSON.stringify(error)}`);
-    return data!;
-  },
+  getSynastry: async (body: SynastryRequest): Promise<PostAstrologySynastryResponse> =>
+    unwrap(await roxy.astrology.calculateSynastry({ body }), 'Failed to calculate synastry'),
 
-  getPlanetaryReturn: async (
-    birthDate: string,
-    birthTime: string,
-    planet: string,
-    approximateDate: string,
-    latitude: number,
-    longitude: number,
-    timezone: number,
-    houseSystem?: 'placidus' | 'whole-sign' | 'equal' | 'koch'
-  ) => {
-    const { data, error } = await apiClient.POST('/planetary-returns', {
-      body: {
-        birthDate,
-        birthTime,
-        planet: planet as any,
-        approximateDate,
-        latitude,
-        longitude,
-        timezone,
-        houseSystem: houseSystem || 'placidus',
-      },
-    });
-    if (error) throw new Error(`Failed to calculate planetary return: ${JSON.stringify(error)}`);
-    return data!;
-  },
+  getCompatibilityScore: async (
+    body: CompatibilityRequest,
+  ): Promise<PostAstrologyCompatibilityScoreResponse> =>
+    unwrap(await roxy.astrology.calculateCompatibility({ body }), 'Failed to calculate compatibility'),
 
-  getHouses: async (
-    date: string,
-    time: string,
-    latitude: number,
-    longitude: number,
-    timezone: number,
-    houseSystem?: 'placidus' | 'whole-sign' | 'equal' | 'koch'
-  ) => {
-    const { data, error } = await apiClient.POST('/houses', {
-      body: {
-        date,
-        time,
-        latitude,
-        longitude,
-        timezone,
-        houseSystem: houseSystem || 'placidus',
-      },
-    });
-    if (error) throw new Error(`Failed to calculate houses: ${JSON.stringify(error)}`);
-    return data!;
-  },
-
-  getAspects: async (
-    date: string,
-    time: string,
-    timezone: number,
-    planets?: string[],
-    aspectTypes?: string[]
-  ) => {
-    const { data, error } = await apiClient.POST('/aspects', {
-      body: { date, time, timezone, planets, aspectTypes },
-    });
-    if (error) throw new Error(`Failed to calculate aspects: ${JSON.stringify(error)}`);
-    return data!;
-  },
-
-  getPlanetMeanings: async () => {
-    const { data, error } = await apiClient.GET('/planet-meanings');
-    if (error) throw new Error(`Failed to fetch planet meanings: ${JSON.stringify(error)}`);
-    return data!;
-  },
-
-  getPlanetMeaningById: async (id: string) => {
-    const { data, error } = await apiClient.GET('/planet-meanings/{identifier}', {
-      params: { path: { identifier: id } },
-    });
-    if (error) throw new Error(`Failed to fetch planet meaning: ${JSON.stringify(error)}`);
-    return data!;
-  },
+  getCompositeChart: async (body: CompositeChartRequest): Promise<PostAstrologyCompositeChartResponse> =>
+    unwrap(await roxy.astrology.generateCompositeChart({ body }), 'Failed to generate composite chart'),
 };

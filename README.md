@@ -1,147 +1,206 @@
+# Astrology Starter App
+
+[![Get API Key](https://img.shields.io/badge/Get_API_Key-roxyapi.com-black?style=for-the-badge)](https://roxyapi.com/pricing)
+[![API Docs](https://img.shields.io/badge/API_Docs-Reference-black?style=for-the-badge)](https://roxyapi.com/api-reference#tag/astrology)
+[![License: MIT](https://img.shields.io/badge/License-MIT-black?style=for-the-badge)](LICENSE)
+
+Open-source React Native (Expo) template for a Western astrology app: daily, weekly, and monthly horoscopes, natal charts, synastry, composite charts, compatibility scoring, live planetary positions, current moon phase, and the full zodiac reference. Built on the [Roxy](https://roxyapi.com) Astrology API and the official [@roxyapi/sdk](https://www.npmjs.com/package/@roxyapi/sdk). One API key, every astrology endpoint, full control over your native UI. Verified against NASA JPL Horizons.
+
+Fork it, set one environment variable, and ship.
+
+## Screenshots
+
 <p align="center">
-  <a href="https://roxyapi.com">
-    <img src="https://raw.githubusercontent.com/RoxyAPI/astrology-starter-app/main/assets/hero.png" alt="Astrology app, ready to ship. Cross-platform Expo starter for iOS, Android, and Web. Powered by RoxyAPI." width="100%">
-  </a>
+  <img src="screenshots/01.jpeg" width="200" alt="Horoscopes" />
+  <img src="screenshots/02.jpeg" width="200" alt="Charts" />
+  <img src="screenshots/03.jpeg" width="200" alt="Cosmos" />
+</p>
+<p align="center">
+  <img src="screenshots/04.jpeg" width="200" alt="Signs" />
+  <img src="screenshots/05.jpeg" width="200" alt="Tools" />
 </p>
 
-# RoxyAPI Astrology Starter
+## What you get
 
-**Production-ready astrology app template** powered by [RoxyAPI's Western Astrology API](https://roxyapi.com/products/astrology-api). Build professional astrology features in minutes with React Native, Expo, and TypeScript.
+- **Horoscopes** in daily, weekly, and monthly form for all 12 signs, with love, career, health, and finance sections plus lucky numbers and compatible signs.
+- **Natal chart** with all planets, house cusps, and aspects, in Placidus, Whole Sign, Equal, or Koch house systems.
+- **Synastry** with the full inter-aspect grid and an overall compatibility score for two charts.
+- **Composite chart** that merges two birth charts into one relationship chart.
+- **Compatibility score** with a category breakdown, strengths, challenges, and an aspect summary.
+- **Cosmos** with live planetary positions and the current moon phase.
+- **Zodiac reference** for all 12 signs with element, modality, ruling planet, keywords, strengths, and famous people.
+- **Built-in city geocoding** so users pick a birth city and never type coordinates.
+- **Dark mode** that follows the device setting.
 
-[![Get API Key](https://img.shields.io/badge/Get_API_Key-RoxyAPI-14b8a6?style=for-the-badge&logo=key&logoColor=white)](https://roxyapi.com/pricing)
-[![Try the API live](https://img.shields.io/badge/Try_API_Live-Free_in_browser-22c55e?style=for-the-badge&logo=swagger&logoColor=white)](https://roxyapi.com/api-reference)
-[![Quickstart](https://img.shields.io/badge/Docs-Quickstart-3b82f6?style=for-the-badge&logo=readthedocs&logoColor=white)](https://roxyapi.com/docs/quickstart)
-[![Methodology](https://img.shields.io/badge/Methodology-NASA_JPL_verified-f59e0b?style=for-the-badge&logo=nasa&logoColor=white)](https://roxyapi.com/methodology)
-[![Astrology API](https://img.shields.io/badge/Astrology_API-Reference-a855f7?style=for-the-badge&logo=star&logoColor=white)](https://roxyapi.com/products/astrology-api)
-[![More starters](https://img.shields.io/badge/More_Starters-RoxyAPI-ec4899?style=for-the-badge&logo=github&logoColor=white)](https://roxyapi.com/starters)
+## Stack
 
-## 📸 Screenshots
+| Technology | Purpose |
+|-----------|---------|
+| [Expo SDK 54](https://expo.dev) | React Native runtime and build tooling |
+| [Expo Router](https://docs.expo.dev/router/introduction/) | File-based navigation with bottom tabs |
+| [@roxyapi/sdk](https://www.npmjs.com/package/@roxyapi/sdk) | Fully typed RoxyAPI client. One key, every domain. |
+| [NativeWind v4](https://www.nativewind.dev) | Tailwind CSS for React Native |
+| [Roxy Astrology API](https://roxyapi.com/products/astrology-api) | Natal charts, horoscopes, synastry, moon phase, zodiac data |
 
-<div align="center">
-  <img src="screenshots/01.jpeg" width="19%" alt="Horoscopes"/>
-  <img src="screenshots/02.jpeg" width="19%" alt="Charts"/>
-  <img src="screenshots/03.jpeg" width="19%" alt="Cosmos"/>
-  <img src="screenshots/04.jpeg" width="19%" alt="Signs"/>
-  <img src="screenshots/05.jpeg" width="19%" alt="Compatibility"/>
-</div>
+## Quick start
 
-## 🌟 What You Get
-
-A complete, working astrology app demonstrating key API features:
-
-### 🔮 Horoscopes
-- Daily, weekly, and monthly horoscopes
-- All 12 zodiac signs
-- Love, career, health, finance insights
-- Lucky numbers, colors, compatible signs
-
-### 📊 Birth Charts & Compatibility
-- Natal chart calculator with planets, houses, aspects
-- Synastry analysis for relationship compatibility
-- Composite charts for couples
-- Compatibility scoring with detailed breakdown
-
-### 🌌 Cosmic Information
-- Real-time planetary positions
-- Current moon phase with insights
-- Complete zodiac signs reference
-
-### 🎯 Built for Developers
-
-- **Type-safe** - Full TypeScript with auto-generated types from OpenAPI
-- **Production-ready** - Error handling, loading states, dark mode
-- **Customizable** - Clean code you can extend and modify
-- **Cross-platform** - iOS, Android, and Web from one codebase
-
-## 🚀 Quick Start
-
-### 1. Get Your API Key
-
-Visit [Astrology API](https://roxyapi.com/products/astrology-api) to get instant API access.
-
-### 2. Install & Configure
+### 1. Clone and install
 
 ```bash
-# Install dependencies
+git clone https://github.com/RoxyAPI/astrology-starter-app.git
+cd astrology-starter-app
 npm install
-
-# Configure environment
-cp .env.example .env
-# Add your API key to .env: EXPO_PUBLIC_ROXYAPI_KEY=your_key_here
 ```
+
+### 2. Get your API key
+
+Get instant access at **[roxyapi.com/pricing](https://roxyapi.com/pricing)**. One key unlocks every astrology endpoint. Add it to `.env`:
+
+```
+EXPO_PUBLIC_ROXYAPI_KEY=your-api-key-here
+```
+
+> **Bundled key caveat.** A mobile app has no server, so any `EXPO_PUBLIC_*` value is compiled into the build and can be read off a device. For production, use a key restricted to your bundle id in the dashboard, or route calls through a thin backend proxy that holds the real key. Never ship an unrestricted key.
 
 ### 3. Run
 
 ```bash
-npm start        # Start Expo dev server
-npm run ios      # Run on iOS simulator
-npm run android  # Run on Android emulator
-npm run web      # Run in web browser
+npm start          # dev server, then press i, a, or w
+npm run ios        # iOS simulator (macOS only)
+npm run android    # Android emulator
+npm run web        # web
+npm test           # data-layer tests
+npm run typecheck  # TypeScript, no emit
 ```
 
-## 📱 Screens Included
+## How it works
 
-| Screen | Features |
-|--------|----------|
-| **Horoscopes** | Daily/weekly/monthly readings for all signs |
-| **Charts** | Natal charts, synastry, composite charts |
-| **Cosmos** | Current planet positions, moon phase |
-| **Signs** | Complete zodiac signs reference library |
-| **Tools** | Compatibility calculator |
+The SDK is the only data layer. There is no generated schema file to keep in sync: `@roxyapi/sdk` ships its own types from the same OpenAPI spec the API serves, so a response flows straight into a screen with no glue code.
 
-## 💻 Usage Example
+### One typed client
 
-```typescript
-import { astrologyApi } from './src/api';
+```ts
+// src/api/client.ts
+import { createRoxy } from '@roxyapi/sdk';
 
-// Get daily horoscope
-const horoscope = await astrologyApi.getDailyHoroscope('aries');
+const key = process.env.EXPO_PUBLIC_ROXYAPI_KEY ?? '';
+export const roxy = createRoxy(key);
+export const hasApiKey = (): boolean => Boolean(key);
+```
 
-// Calculate natal chart
+### One data layer, screens stay thin
+
+Every screen imports from `src/api`. The data layer wraps each `roxy.astrology.*` and `roxy.location.*` call and unwraps the SDK `{ data, error }` result into either the response or one thrown error the screen can catch:
+
+```ts
+// src/api/astrology.ts
+export const astrologyApi = {
+  getDailyHoroscope: async (sign) => unwrap(await roxy.astrology.getDailyHoroscope({ path: { sign } }), 'Failed to fetch daily horoscope'),
+  // ...
+};
+```
+
+### Location first
+
+Every chart needs latitude, longitude, and timezone, so the user picks a birth city and the app geocodes it. Never ask for raw coordinates.
+
+```ts
+const cities = await astrologyApi.searchCities('New York');
+const city = cities[0];
 const chart = await astrologyApi.getNatalChart({
-  date: '1990-07-15',
+  date: '1990-01-15',
   time: '14:30:00',
-  latitude: 40.7128,
-  longitude: -74.006,
-  timezone: -5,
-  houseSystem: 'placidus'
+  latitude: city.latitude,
+  longitude: city.longitude,
+  timezone: city.timezone, // IANA string, resolved to the DST-correct offset for the chart date
 });
-
-// Check compatibility
-const compatibility = await astrologyApi.getCompatibilityScore(
-  person1Data,
-  person2Data
-);
 ```
 
-## 🔧 Customization
+## Featured endpoints
 
-This is a **starter template** - modify it to match your needs:
+The highest-demand Western astrology endpoints, in the order you are most likely to ship them. Every method name and field below comes from the [OpenAPI spec](https://roxyapi.com/api/v2/astrology/openapi.json).
 
-- **Branding**: Update `app.config.ts` and assets
-- **Styling**: Modify `tailwind.config.js` and components
-- **Features**: Add more API endpoints from [our docs](https://roxyapi.com/docs)
-- **UI/UX**: Customize screens in `app/(tabs)/`
+```ts
+import { createRoxy } from '@roxyapi/sdk';
 
-## 📚 API Documentation
+const roxy = createRoxy(process.env.EXPO_PUBLIC_ROXYAPI_KEY!);
 
-- **Interactive Docs**: [roxyapi.com/docs](https://roxyapi.com/docs)
-- **Pricing**: [roxyapi.com/pricing](https://roxyapi.com/pricing)
-- **Support**: [roxyapi.com/contact](https://roxyapi.com/contact)
+// 1. Geocode the birth city first. Every chart needs latitude, longitude, timezone.
+const { data: search } = await roxy.location.searchCities({ query: { q: 'New York' } });
+const { latitude, longitude, timezone } = search.cities[0];
 
-## 🏗️ Tech Stack
+// 2. Natal chart. The number one Western query, called on every onboarding.
+const { data: natal } = await roxy.astrology.generateNatalChart({
+  body: { date: '1990-01-15', time: '14:30:00', latitude, longitude, timezone },
+});
+// natal.planets[].name, natal.houses[].sign, natal.aspects[].type
 
-- **Expo SDK 54** - React Native framework
-- **TypeScript** - Full type safety
-- **NativeWind 4** - Tailwind CSS for React Native
-- **openapi-fetch** - Type-safe API client
+// 3. Daily horoscope. Highest per-user call frequency, drives daily actives and push.
+const { data: horoscope } = await roxy.astrology.getDailyHoroscope({ path: { sign: 'aries' } });
+// horoscope.overview, horoscope.love, horoscope.career, horoscope.luckyNumber
 
-## 📄 License
+// 4. Synastry. The dating-app pro feature, full inter-aspect analysis between two charts.
+const { data: synastry } = await roxy.astrology.calculateSynastry({
+  body: {
+    person1: { date: '1990-01-15', time: '14:30:00', latitude, longitude, timezone },
+    person2: { date: '1992-07-22', time: '09:00:00', latitude, longitude, timezone },
+  },
+});
+// synastry.compatibilityScore, synastry.interAspects, synastry.analysis.overall
 
-This starter template is provided for RoxyAPI customers. See [roxyapi.com/terms](https://roxyapi.com/terms).
+// 5. Current moon phase. Viral for wellness, cycle-tracking, and meditation apps.
+const { data: moon } = await roxy.astrology.getCurrentMoonPhase();
+// moon.phase, moon.illumination, moon.age, moon.sign
+```
 
----
+Browse the rest in the [API reference](https://roxyapi.com/api-reference#tag/astrology).
 
-**Need help?** Check our [documentation](https://roxyapi.com/docs) or [contact support](https://roxyapi.com/contact).
+## Project structure
 
-Built by [RoxyAPI](https://roxyapi.com) - Premium data APIs for developers.
+```
+app/                          # Expo Router screens
+├── _layout.tsx               # Root Stack
+└── (tabs)/
+    ├── _layout.tsx           # Bottom tabs
+    ├── index.tsx             # Daily, weekly, monthly horoscopes
+    ├── charts.tsx            # Natal, synastry, composite charts
+    ├── cosmos.tsx            # Live planet positions and moon phase
+    ├── signs.tsx             # Zodiac reference library
+    └── tools.tsx             # Compatibility calculator
+src/
+├── api/
+│   ├── client.ts             # The one Roxy SDK client + hasApiKey guard
+│   ├── astrology.ts          # Wraps roxy.astrology.* and roxy.location.*, unwraps { data, error }
+│   ├── astrology.test.ts     # Data-layer tests with the SDK mocked
+│   ├── types.ts              # SDK response types under app-friendly names
+│   └── index.ts              # Barrel export
+├── components/CityPicker.tsx  # Birth-city geocoding picker
+└── constants/colors.ts        # appColors for React Native props
+```
+
+## Customize
+
+- **Add a feature.** Pick an astrology method, add a wrapper in `src/api/astrology.ts`, call it from a screen. The SDK types come from the spec, so new endpoints flow through with no manual typing.
+- **Change the theme.** This app uses Tailwind colors through NativeWind. Swap `indigo-600` in the screen `className` strings for any Tailwind color, and update `appColors.primary` in `src/constants/colors.ts` for the React Native props.
+- **Reuse the city picker.** `CityPicker` handles geocoding for any new screen that needs a location.
+
+## Why Roxy
+
+- **Breadth.** Western astrology plus Vedic astrology, numerology, tarot, biorhythm, I Ching, crystals, dreams, and angel numbers under one key.
+- **Type-safe.** The SDK types come from one OpenAPI pipeline, so response shapes cannot drift from what the API returns.
+- **Accurate.** Calculations are verified against NASA JPL Horizons.
+- **Eight languages.** Pass `query: { lang }` on the reading endpoints for interpretations in English, Hindi, Turkish, Spanish, German, Portuguese, French, or Russian.
+- **Remote MCP.** Connect AI agents to every astrology endpoint at `roxyapi.com/mcp/astrology`, no local setup.
+
+## Links
+
+- [Astrology API](https://roxyapi.com/products/astrology-api)
+- [API reference and playground](https://roxyapi.com/api-reference#tag/astrology)
+- [Get API key](https://roxyapi.com/pricing)
+- [All templates](https://roxyapi.com/starters)
+- [Methodology and accuracy](https://roxyapi.com/methodology)
+- [Connect AI agents via MCP](https://roxyapi.com/docs/mcp)
+
+## License
+
+MIT

@@ -2,14 +2,14 @@ import { View, Text, ScrollView, Pressable } from "react-native";
 import { useState, useEffect } from "react";
 import { Picker } from "@react-native-picker/picker";
 import { hasApiKey, astrologyApi } from "../../src/api";
-import type { Horoscope, WeeklyHoroscope, MonthlyHoroscope, ZodiacSign } from "../../src/api/types";
+import type { Horoscope, WeeklyHoroscope, MonthlyHoroscope, ZodiacSign, ZodiacSignId } from "../../src/api/types";
 import { LoadingSpinner, ErrorMessage, HoroscopeSection } from "../../src/components";
 
 type Period = 'daily' | 'weekly' | 'monthly';
 
 export default function HoroscopeScreen() {
   const [signs, setSigns] = useState<ZodiacSign[]>([]);
-  const [selectedSign, setSelectedSign] = useState<string>("");
+  const [selectedSign, setSelectedSign] = useState<ZodiacSignId | "">("");
   const [period, setPeriod] = useState<Period>("daily");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -33,7 +33,7 @@ export default function HoroscopeScreen() {
       const data = await astrologyApi.getSigns();
       setSigns(data);
       if (data.length > 0) {
-        setSelectedSign(data[0].id);
+        setSelectedSign(data[0].id as ZodiacSignId);
       }
     } catch {
       setError("Failed to load signs");
@@ -46,6 +46,7 @@ export default function HoroscopeScreen() {
       setLoading(false);
       return;
     }
+    if (!selectedSign) return;
 
     try {
       setLoading(true);
@@ -87,7 +88,7 @@ export default function HoroscopeScreen() {
         <View className="bg-zinc-100 dark:bg-zinc-900 rounded-2xl mb-6 overflow-hidden">
           <Picker
             selectedValue={selectedSign}
-            onValueChange={setSelectedSign}
+            onValueChange={(value) => setSelectedSign(value as ZodiacSignId)}
             style={{ color: '#18181b' }}
           >
             {signs.map(sign => (
