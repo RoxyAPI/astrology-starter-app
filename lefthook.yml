@@ -1,0 +1,16 @@
+# Local CI guard. Mirrors .github/workflows/ci.yml so broken code never reaches a push.
+# Auto-installed via the package.json prepare script on npm install.
+pre-commit:
+  parallel: true
+  commands:
+    typecheck:
+      run: npx tsc --noEmit
+pre-push:
+  parallel: false
+  commands:
+    typecheck:
+      run: npx tsc --noEmit
+      priority: 1
+    test:
+      run: npm test
+      priority: 2

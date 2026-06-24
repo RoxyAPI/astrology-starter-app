@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "test": "jest",
     "ncu:minor": "npx -y npm-check-updates --target minor",
-    "ncu:minor:apply": "npx -y npm-check-updates -u --target minor && npm install"
+    "ncu:minor:apply": "npx -y npm-check-updates -u --target minor && npm install",
+    "prepare": "lefthook install"
   },
   "jest": {
     "preset": "jest-expo/node"
@@ -45,6 +46,7 @@
     "babel-preset-expo": "~56.0.0",
     "jest": "~29.7.0",
     "jest-expo": "~56.0.5",
+    "lefthook": "^2.1.9",
     "typescript": "~6.0.3"
   },
   "private": true
