@@ -12,31 +12,40 @@ updates:
           - "minor"
           - "patch"
     ignore:
-      # The expo-* family, its babel preset, its jest runner, and the React Native pin all move
-      # together as one Expo SDK release, driven by "npx expo install --fix" and the upgrade guide.
-      # A lone major bump of any one of them just breaks the app, so an SDK jump is a deliberate
-      # migration, never a weekly PR. Minor and patch updates inside the current SDK still flow.
+      # THE EXPO SDK OWNS THESE VERSIONS. The SDK template pins react, react-native and every
+      # native module to exact versions that are built and tested against each other, and
+      # "npx expo install --fix" is the only thing allowed to move them. React Native is on 0.x,
+      # so a 0.85 -> 0.86 bump is a BREAKING release that Dependabot happily classifies as a minor
+      # and auto-merges. That is not theoretical: it landed once, and it broke "npm ci" outright,
+      # because jest-expo still wanted @react-native/jest-preset ^0.85 while react-native demanded
+      # 0.86. Ignore ALL update types here, not just majors. Upgrading these means upgrading the
+      # Expo SDK, deliberately, with expo install --fix and expo-doctor.
+      - dependency-name: "react"
+      - dependency-name: "react-dom"
+      - dependency-name: "react-native"
+      - dependency-name: "react-native-*"
+      - dependency-name: "@react-native/*"
+      - dependency-name: "@react-native-async-storage/async-storage"
+      # The expo-* family, its babel preset and its jest runner also ship as one SDK release, so a
+      # lone MAJOR breaks the app. Patch and minor inside the current SDK still flow.
       - dependency-name: "expo"
         update-types: ["version-update:semver-major"]
       - dependency-name: "expo-*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@expo/*"
         update-types: ["version-update:semver-major"]
       - dependency-name: "jest-expo"
         update-types: ["version-update:semver-major"]
       - dependency-name: "babel-preset-expo"
         update-types: ["version-update:semver-major"]
-      - dependency-name: "react-native*"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "@react-native-async-storage/async-storage"
-        update-types: ["version-update:semver-major"]
       - dependency-name: "jest"
         update-types: ["version-update:semver-major"]
       - dependency-name: "@types/jest"
         update-types: ["version-update:semver-major"]
-      # NativeWind owns the Tailwind version. This app is on a Tailwind 3 config
-      # (tailwind.config.js with content globs and presets: [nativewind/preset]), and Tailwind 4
-      # replaces that with a CSS-first @theme engine. NativeWind 4 has no Tailwind 4 preset, so
-      # the bump silently breaks styling. The peer range says >3.3.0, which makes it look safe and
-      # it is not. Moving to Tailwind 4 means moving to NativeWind 5, deliberately.
+      # NativeWind owns the Tailwind version. This app is on a Tailwind 3 config (content globs plus
+      # presets: [nativewind/preset]), and Tailwind 4 replaces that with a CSS-first @theme engine
+      # NativeWind 4 has no preset for. The peer range says >3.3.0, which makes it look safe and it
+      # is not. Tailwind 4 means NativeWind 5, deliberately.
       - dependency-name: "tailwindcss"
         update-types: ["version-update:semver-major"]
       # TypeScript 7 is a full compiler rewrite. Revisit deliberately, not as a drive-by bump.
