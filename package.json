@@ -27,7 +27,7 @@
     "expo-router": "~56.2.11",
     "expo-splash-screen": "~56.0.10",
     "expo-status-bar": "~56.0.4",
-    "lucide-react-native": "^0.577.0",
+    "lucide-react-native": "^1.24.0",
     "nativewind": "^4.2.3",
     "react": "19.2.7",
     "react-dom": "19.2.7",

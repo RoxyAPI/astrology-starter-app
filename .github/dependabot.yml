@@ -32,6 +32,13 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "@types/jest"
         update-types: ["version-update:semver-major"]
+      # NativeWind owns the Tailwind version. This app is on a Tailwind 3 config
+      # (tailwind.config.js with content globs and presets: [nativewind/preset]), and Tailwind 4
+      # replaces that with a CSS-first @theme engine. NativeWind 4 has no Tailwind 4 preset, so
+      # the bump silently breaks styling. The peer range says >3.3.0, which makes it look safe and
+      # it is not. Moving to Tailwind 4 means moving to NativeWind 5, deliberately.
+      - dependency-name: "tailwindcss"
+        update-types: ["version-update:semver-major"]
       # TypeScript 7 is a full compiler rewrite. Revisit deliberately, not as a drive-by bump.
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
