@@ -15,11 +15,16 @@ updates:
       # THE EXPO SDK OWNS THESE VERSIONS. The SDK template pins react, react-native and every
       # native module to exact versions that are built and tested against each other, and
       # "npx expo install --fix" is the only thing allowed to move them. React Native is on 0.x,
-      # so a 0.85 -> 0.86 bump is a BREAKING release that Dependabot happily classifies as a minor
-      # and auto-merges. That is not theoretical: it landed once, and it broke "npm ci" outright,
-      # because jest-expo still wanted @react-native/jest-preset ^0.85 while react-native demanded
-      # 0.86. Ignore ALL update types here, not just majors. Upgrading these means upgrading the
-      # Expo SDK, deliberately, with expo install --fix and expo-doctor.
+      # so an 0.x -> 0.x+1 bump is a BREAKING release that Dependabot happily classifies as a minor
+      # and auto-merges. That is not theoretical: 0.85 -> 0.86 landed once on its own and broke
+      # "npm ci" outright, because jest-expo still wanted @react-native/jest-preset ^0.85 while
+      # react-native demanded 0.86. Ignore ALL update types here, not just majors. Upgrading these
+      # means upgrading the Expo SDK, deliberately, with expo install --fix and expo-doctor.
+      # Current baseline: SDK 57 / React Native 0.86 / React 19.2.3 (taken 2026-07-27). The pins are
+      # authoritative in expo/bundledNativeModules.json, and expo-doctor is the validator, not
+      # "expo install --fix", which reports "up to date" on an already broken tree. Note --fix only
+      # rewrites dependencies, never devDependencies, so jest-expo and babel-preset-expo must be
+      # moved to the new SDK major BY HAND in the same install or npm ERESOLVEs on the jest preset.
       - dependency-name: "react"
       - dependency-name: "react-dom"
       - dependency-name: "react-native"
@@ -38,6 +43,10 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "babel-preset-expo"
         update-types: ["version-update:semver-major"]
+      # Jest stays on 29 because jest-expo 57 IS a jest 29 package: it depends on babel-jest,
+      # @jest/globals, jest-snapshot and jest-environment-jsdom at ^29.2.1. Taking jest 30 installs
+      # a second jest runtime beside the preset that actually runs the suite. @types/jest tracks
+      # whatever jest resolves to, so it is pinned to the same major. Jest moves with the SDK.
       - dependency-name: "jest"
         update-types: ["version-update:semver-major"]
       - dependency-name: "@types/jest"

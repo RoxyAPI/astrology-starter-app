@@ -1,6 +1,6 @@
 # Agents Guide
 
-This is a RoxyAPI starter app. A cross platform Western astrology app built with React Native, Expo SDK 54, and TypeScript. Runs on iOS, Android, and Web from one codebase. Demonstrates horoscopes, natal charts, synastry, composite charts, compatibility scoring, planetary positions, moon phase, and zodiac references, all powered by the RoxyAPI Astrology API through the official `@roxyapi/sdk`.
+This is a RoxyAPI starter app. A cross platform Western astrology app built with React Native, Expo SDK 57, and TypeScript. Runs on iOS, Android, and Web from one codebase. Demonstrates horoscopes, natal charts, synastry, composite charts, compatibility scoring, planetary positions, moon phase, and zodiac references, all powered by the RoxyAPI Astrology API through the official `@roxyapi/sdk`.
 
 ## Setup
 - Get an API key at https://roxyapi.com/pricing

@@ -36,7 +36,7 @@ Fork it, set one environment variable, and ship.
 
 | Technology | Purpose |
 |-----------|---------|
-| [Expo SDK 54](https://expo.dev) | React Native runtime and build tooling |
+| [Expo SDK 57](https://expo.dev) | React Native runtime and build tooling |
 | [Expo Router](https://docs.expo.dev/router/introduction/) | File-based navigation with bottom tabs |
 | [@roxyapi/sdk](https://www.npmjs.com/package/@roxyapi/sdk) | Fully typed RoxyAPI client. One key, every domain. |
 | [NativeWind v4](https://www.nativewind.dev) | Tailwind CSS for React Native |
