@@ -31,18 +31,25 @@ updates:
       - dependency-name: "react-native-*"
       - dependency-name: "@react-native/*"
       - dependency-name: "@react-native-async-storage/async-storage"
-      # The expo-* family, its babel preset and its jest runner also ship as one SDK release, so a
-      # lone MAJOR breaks the app. Patch and minor inside the current SDK still flow.
+      # The expo-* family ships as one SDK release, so a lone MAJOR breaks the app. Patch and
+      # minor inside the current SDK still flow.
       - dependency-name: "expo"
         update-types: ["version-update:semver-major"]
       - dependency-name: "expo-*"
         update-types: ["version-update:semver-major"]
       - dependency-name: "@expo/*"
         update-types: ["version-update:semver-major"]
+      # jest-expo and babel-preset-expo track the REACT NATIVE version, not merely the SDK major,
+      # so no update type on them is safe while react-native is pinned. Measured on SDK 57:
+      # jest-expo 57.0.2 peers "@react-native/jest-preset": "^0.86.0" and resolves cleanly, while
+      # the 57.0.3 PATCH raises that to "^0.86.2" against a react-native 0.86.0 whose own
+      # peerOptional pins the preset to exactly "0.86.0". The intersection is empty, so npm
+      # ERESOLVEs and the whole grouped pull request dies at install before running one test,
+      # which is why unrelated bumps in the same group stopped merging. These two move only with
+      # a deliberate SDK upgrade, and "expo install --fix" rewrites dependencies only, so both
+      # have to be edited by hand at that point.
       - dependency-name: "jest-expo"
-        update-types: ["version-update:semver-major"]
       - dependency-name: "babel-preset-expo"
-        update-types: ["version-update:semver-major"]
       # Jest stays on 29 because jest-expo 57 IS a jest 29 package: it depends on babel-jest,
       # @jest/globals, jest-snapshot and jest-environment-jsdom at ^29.2.1. Taking jest 30 installs
       # a second jest runtime beside the preset that actually runs the suite. @types/jest tracks
