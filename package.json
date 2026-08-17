@@ -19,7 +19,7 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.2.0",
     "@react-native-picker/picker": "2.11.4",
-    "@roxyapi/sdk": "^1.2.61",
+    "@roxyapi/sdk": "^1.2.63",
     "expo": "^57.0.12",
     "expo-constants": "~57.0.7",
     "expo-image": "~57.0.2",
