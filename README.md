@@ -186,7 +186,7 @@ src/
 
 ## Why Roxy
 
-- **Breadth.** Western astrology plus Vedic astrology, forecast, human design, Chinese astrology, feng shui, numerology, tarot, biorhythm, I Ching, crystals, dreams, and angel numbers under one key.
+- **Breadth.** Western astrology plus Vedic astrology, forecast, human design, Chinese astrology, feng shui, Mesoamerican astrology, vastu, numerology, kabbalah, tarot, biorhythm, ayurveda, I Ching, crystals, dreams, and angel numbers under one key.
 - **Type-safe.** The SDK types come from one OpenAPI pipeline, so response shapes cannot drift from what the API returns.
 - **Accurate.** Calculations are verified against NASA JPL Horizons.
 - **Eight languages.** Pass `query: { lang }` on the reading endpoints for interpretations in English, Hindi, Turkish, Spanish, German, Portuguese, French, or Russian.
