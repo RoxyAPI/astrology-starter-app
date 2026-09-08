@@ -197,7 +197,7 @@ src/
 - [Astrology API](https://roxyapi.com/products/astrology-api)
 - [API reference and playground](https://roxyapi.com/api-reference#tag/astrology)
 - [Get API key](https://roxyapi.com/pricing)
-- [All templates](https://roxyapi.com/starters)
+- [All templates](https://roxyapi.com/templates)
 - [Methodology and accuracy](https://roxyapi.com/methodology)
 - [Connect AI agents via MCP](https://roxyapi.com/docs/mcp)
 

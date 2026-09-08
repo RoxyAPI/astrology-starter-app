@@ -44,5 +44,5 @@ This is a RoxyAPI starter app. A cross platform Western astrology app built with
 - Python SDK: https://github.com/RoxyAPI/sdk-python (PyPI: `roxy-sdk`)
 - MCP servers: https://roxyapi.com/docs/mcp
 - Methodology and accuracy: https://roxyapi.com/methodology
-- More starters: https://roxyapi.com/starters
+- More starters: https://roxyapi.com/templates
 - Pricing: https://roxyapi.com/pricing
