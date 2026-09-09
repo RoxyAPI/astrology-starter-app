@@ -5,14 +5,14 @@ This is a RoxyAPI starter app. A cross platform Western astrology app built with
 ## Setup
 - Get an API key at https://roxyapi.com/pricing
 - Create `.env` in the project root with:
-  - `EXPO_PUBLIC_ROXYAPI_KEY=your_api_key_here`
+  - `EXPO_PUBLIC_ROXY_API_KEY=your_api_key_here`
 - Install with `npm install`
 - Run with `npm start`, then `npm run ios`, `npm run android`, or `npm run web`
 - Test with `npm test`, typecheck with `npm run typecheck`
 
 ## How it calls RoxyAPI
 - The only data layer is `@roxyapi/sdk`. `createRoxy(key)` sets the base URL and the auth header, and ships its own types from the OpenAPI spec, so there is no generated schema file to keep in sync.
-- The key is bundled into the app (mobile has no server). Treat `EXPO_PUBLIC_ROXYAPI_KEY` as a public, restricted key locked to your bundle id, or proxy calls through a backend you control.
+- The key is bundled into the app (mobile has no server). Treat `EXPO_PUBLIC_ROXY_API_KEY` as a public, restricted key locked to your bundle id, or proxy calls through a backend you control.
 - Charts need latitude, longitude, and timezone. Never ask users to type coordinates. Geocode the birth city with `roxy.location.searchCities` first, then feed `city.latitude`, `city.longitude`, and `city.timezone` (the IANA string) straight into any chart call.
 - Live OpenAPI spec: https://roxyapi.com/api/v2/astrology/openapi.json
 - Live playground: https://roxyapi.com/api-reference

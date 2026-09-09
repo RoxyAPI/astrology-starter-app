@@ -57,7 +57,7 @@ npm install
 Get instant access at **[roxyapi.com/pricing](https://roxyapi.com/pricing)**. One key unlocks every astrology endpoint. Add it to `.env`:
 
 ```
-EXPO_PUBLIC_ROXYAPI_KEY=your-api-key-here
+EXPO_PUBLIC_ROXY_API_KEY=your-api-key-here
 ```
 
 > **Bundled key caveat.** A mobile app has no server, so any `EXPO_PUBLIC_*` value is compiled into the build and can be read off a device. For production, use a key restricted to your bundle id in the dashboard, or route calls through a thin backend proxy that holds the real key. Never ship an unrestricted key.
@@ -83,7 +83,7 @@ The SDK is the only data layer. There is no generated schema file to keep in syn
 // src/api/client.ts
 import { createRoxy } from '@roxyapi/sdk';
 
-const key = process.env.EXPO_PUBLIC_ROXYAPI_KEY ?? '';
+const key = process.env.EXPO_PUBLIC_ROXY_API_KEY ?? '';
 export const roxy = createRoxy(key);
 export const hasApiKey = (): boolean => Boolean(key);
 ```
@@ -123,7 +123,7 @@ The highest-demand Western astrology endpoints, in the order you are most likely
 ```ts
 import { createRoxy } from '@roxyapi/sdk';
 
-const roxy = createRoxy(process.env.EXPO_PUBLIC_ROXYAPI_KEY!);
+const roxy = createRoxy(process.env.EXPO_PUBLIC_ROXY_API_KEY!);
 
 // 1. Geocode the birth city first. Every chart needs latitude, longitude, timezone.
 const { data: search } = await roxy.location.searchCities({ query: { q: 'New York' } });

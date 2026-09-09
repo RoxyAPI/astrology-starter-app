@@ -46,7 +46,7 @@ export function RoxyBranding() {
         </Pressable>
       </View>
       <Text style={{ fontSize: 12, color: '#9ca3af', marginTop: 32, textAlign: 'center' }}>
-        Add EXPO_PUBLIC_ROXYAPI_KEY to your .env file
+        Add EXPO_PUBLIC_ROXY_API_KEY to your .env file
       </Text>
     </View>
   );
