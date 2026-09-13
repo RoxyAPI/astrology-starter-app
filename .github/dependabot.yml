@@ -79,6 +79,8 @@ updates:
       # ignore a red Dependabot run. This clears naturally when expo-router moves off
       # query-string 7; until then the entry documents why nothing is being done.
       - dependency-name: "decode-uri-component"
+      # uuid reaches this app only via expo-splash-screen -> @expo/config-plugins -> xcode -> uuid@7, a build-time-only chain with no patched version upstream.
+      - dependency-name: "uuid"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
