@@ -81,6 +81,9 @@ updates:
       - dependency-name: "decode-uri-component"
       # uuid reaches this app only via expo-splash-screen -> @expo/config-plugins -> xcode -> uuid@7, a build-time-only chain with no patched version upstream.
       - dependency-name: "uuid"
+      # zod reaches this app only via expo -> @expo/cli, which validates dev-server plugin schemas with zod 3 and is never bundled into the app.
+      # Every patched release is zod 4, a major @expo/cli does not accept, so a security update can only propose an Expo SDK major. It clears with the next SDK upgrade.
+      - dependency-name: "zod"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
